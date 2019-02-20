@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\Orderable;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use Orderable;
+
     protected $fillable = ['body'];
 
     public function topic()
