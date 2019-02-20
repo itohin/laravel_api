@@ -7,9 +7,23 @@ use App\Topic;
 use App\Transformers\TopicTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTopicRequest;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class TopicController extends Controller
 {
+    public function index()
+    {
+        $topics = Topic::latestFirst()->paginate(3);
+        $topicsCollection = $topics->getCollection();
+
+        return fractal()
+            ->collection($topicsCollection)
+            ->parseIncludes(['user'])
+            ->transformWith(new TopicTransformer)
+            ->paginateWith(new IlluminatePaginatorAdapter($topics))
+            ->toArray();
+    }
+
     public function store(StoreTopicRequest $request)
     {
         $topic = new Topic;
