@@ -20,4 +20,9 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function like()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
 }
