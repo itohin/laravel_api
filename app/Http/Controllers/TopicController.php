@@ -48,6 +48,15 @@ class TopicController extends Controller
             ->toArray();
     }
 
+    public function destroy(Topic $topic)
+    {
+        $this->authorize('destroy', $topic);
+
+        $topic->delete();
+
+        return response(null, 204);
+    }
+
     public function store(StoreTopicRequest $request)
     {
         $topic = new Topic;

@@ -14,4 +14,9 @@ class TopicPolicy
     {
         return $user->ownsTopic($topic);
     }
+
+    public function destroy(User $user, Topic $topic)
+    {
+        return $user->ownsTopic($topic);
+    }
 }
