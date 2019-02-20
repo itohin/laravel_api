@@ -7,7 +7,7 @@ use App\Topic;
 
 class TopicTransformer extends \League\Fractal\TransformerAbstract
 {
-    protected $availableIncludes = ['user'];
+    protected $availableIncludes = ['user', 'posts'];
 
     public function transform(Topic $topic)
     {
@@ -22,5 +22,10 @@ class TopicTransformer extends \League\Fractal\TransformerAbstract
     public function includeUser(Topic $topic)
     {
         return $this->item($topic->user, new UserTransformer);
+    }
+
+    public function includePosts(Topic $topic)
+    {
+        return $this->collection($topic->posts, new PostTransformer);
     }
 }
