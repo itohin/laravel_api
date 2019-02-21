@@ -9,7 +9,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use Response;
 use Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -86,6 +86,10 @@ class Handler extends ExceptionHandler
                         'error' => end($model) . ' not found'
                     ]
                 ], 404);
+            }
+
+            if ($exception instanceof NotFoundHttpException) {
+                return response(null, 404);
             }
         }
         return parent::render($request, $exception);
