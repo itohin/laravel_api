@@ -29,6 +29,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function hasLikedPost(Post $post)
+    {
+        return $post->likes->where('user_id', $this->id)->count() === 1;
+    }
+
     public function ownsTopic(Topic $topic)
     {
         return $this->id === $topic->user->id;
